@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShoeHub – Premium Shoes, Delivered Nationwide</title>
+  <meta name="description" content="Shop premium imported shoes with Cash on Delivery. Free 7-day exchange across Bangladesh.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --p:#FF6B00;--pd:#d95900;
+      --bg:#fff;--surf:#F7F7F7;--bdr:#EBEBEB;
+      --tx:#0D0D0D;--txm:#666;
+      --r:12px;--rs:8px;
+      --sh:0 4px 20px rgba(0,0,0,.09);
+      --nh:60px;--bnh:64px;
+      --font:'Inter',sans-serif
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font);background:var(--bg);color:var(--tx);line-height:1.5;-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    button{font-family:var(--font);cursor:pointer;border:none;background:none}
+
+    /* ── NAVBAR ── */
+    .navbar{position:sticky;top:0;z-index:200;background:var(--bg);border-bottom:1px solid var(--bdr);height:var(--nh);display:flex;align-items:center;justify-content:space-between;padding:0 16px;gap:12px}
+    .nav-logo{font-size:1.45rem;font-weight:900;letter-spacing:-.6px;flex-shrink:0}
+    .nav-logo span{color:var(--p)}
+    .nav-actions{display:flex;align-items:center;gap:2px}
+    .nav-btn{padding:8px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;transition:background .15s;position:relative;color:var(--tx)}
+    .nav-btn:hover{background:var(--surf)}
+    .c-bdg{position:absolute;top:1px;right:1px;background:var(--p);color:#fff;font-size:.58rem;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px;pointer-events:none}
+
+    /* ── SEARCH OVERLAY ── */
+    .srch-ov{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);align-items:flex-start;justify-content:center;padding-top:70px}
+    .srch-ov.open{display:flex}
+    .srch-box{background:#fff;border-radius:var(--r);padding:16px;width:92%;max-width:500px;box-shadow:0 12px 48px rgba(0,0,0,.22)}
+    .srch-inp{width:100%;padding:13px 16px;border:2px solid var(--bdr);border-radius:var(--rs);font-size:1rem;font-family:var(--font);outline:none;transition:border-color .2s}
+    .srch-inp:focus{border-color:var(--p)}
+    .srch-hint{font-size:.75rem;color:var(--txm);margin-top:6px;padding:0 4px}
+    .srch-res{margin-top:8px;max-height:320px;overflow-y:auto}
+    .srch-item{display:flex;align-items:center;gap:12px;padding:9px 8px;border-radius:var(--rs);cursor:pointer;transition:background .15s}
+    .srch-item:hover{background:var(--surf)}
+    .srch-item img{width:46px;height:46px;object-fit:cover;border-radius:7px;flex-shrink:0;background:var(--surf)}
+    .srch-nm{font-weight:600;font-size:.88rem;margin-bottom:2px}
+    .srch-pr{color:var(--p);font-weight:700;font-size:.82rem}
+
+    /* ── HERO ── */
+    .hero{background:#0D0D0D;color:#fff;padding:60px 20px 68px;text-align:center;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(255,107,0,.16) 0%,transparent 60%);pointer-events:none}
+    .hero-inner{position:relative;max-width:500px;margin:0 auto}
+    .h-eye{font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--p);margin-bottom:16px}
+    .h-title{font-size:clamp(2.2rem,9vw,3.4rem);font-weight:900;line-height:1.06;letter-spacing:-2px;margin-bottom:14px}
+    .h-title em{color:var(--p);font-style:normal}
+    .h-sub{font-size:.93rem;color:rgba(255,255,255,.6);margin-bottom:30px;line-height:1.65}
+    .h-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--p);color:#fff;border-radius:50px;font-weight:700;font-size:.95rem;transition:background .2s,transform .12s;box-shadow:0 6px 20px rgba(255,107,0,.38)}
+    .h-cta:hover{background:var(--pd)}
+    .h-cta:active{transform:scale(.97)}
+
+    /* ── TRUST BAR ── */
+    .trust{display:flex;flex-wrap:wrap;justify-content:center;background:var(--surf);border-bottom:1px solid var(--bdr)}
+    .t-item{display:flex;align-items:center;gap:7px;padding:11px 14px;font-size:.77rem;font-weight:600;color:var(--txm);white-space:nowrap}
+    .t-item .ic{font-size:1rem}
+
+    /* ── SECTION ── */
+    .sec{padding:36px 16px;max-width:1100px;margin:0 auto}
+    .sec-hd{font-size:1.3rem;font-weight:800;letter-spacing:-.3px;margin-bottom:4px}
+    .sec-sub{color:var(--txm);font-size:.85rem;margin-bottom:20px}
+    .row-between{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+    .pcount{font-size:.78rem;color:var(--txm)}
+
+    /* ── CATEGORIES ── */
+    .cats{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .cats::-webkit-scrollbar{display:none}
+    .cat{flex:0 0 auto;width:104px;background:var(--surf);border-radius:var(--r);padding:17px 10px;text-align:center;cursor:pointer;transition:all .15s;border:2px solid transparent}
+    .cat:hover,.cat.on{border-color:var(--p);background:#FFF5EE;transform:translateY(-2px)}
+    .cat-ic{font-size:1.7rem;display:block;margin-bottom:7px}
+    .cat-nm{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+
+    /* ── SORT TABS ── */
+    .ftabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+    .ftab{padding:6px 15px;border-radius:50px;font-size:.78rem;font-weight:600;border:2px solid var(--bdr);cursor:pointer;transition:all .15s;color:var(--txm);background:#fff}
+    .ftab.on,.ftab:hover{background:var(--p);border-color:var(--p);color:#fff}
+
+    /* ── PRODUCTS GRID ── */
+    .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media(min-width:580px){.pgrid{grid-template-columns:repeat(3,1fr);gap:14px}}
+    @media(min-width:900px){.pgrid{grid-template-columns:repeat(4,1fr);gap:16px}}
+
+    /* ── PRODUCT CARD ── */
+    .pcard{background:var(--bg);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .15s}
+    .pcard:hover{box-shadow:var(--sh);transform:translateY(-3px)}
+    .pc-img{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--surf)}
+    .pc-img img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+    .pcard:hover .pc-img img{transform:scale(1.05)}
+    .pc-badge{position:absolute;top:8px;left:8px;background:var(--p);color:#fff;font-size:.6rem;font-weight:700;padding:3px 8px;border-radius:20px;text-transform:uppercase;z-index:1}
+    .pc-badge.sold{background:#888}
+    .pc-stock{position:absolute;bottom:0;left:0;right:0;background:rgba(200,0,0,.82);color:#fff;font-size:.67rem;font-weight:700;padding:5px;text-align:center}
+    .pc-info{padding:10px 11px 11px}
+    .pc-nm{font-size:.82rem;font-weight:600;line-height:1.35;margin-bottom:7px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+    .pc-pr{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:9px}
+    .price{font-size:.95rem;font-weight:800;color:var(--p)}
+    .ori{font-size:.77rem;color:#bbb;text-decoration:line-through}
+    .disc{background:#ffeded;color:#c00;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:20px}
+    .pc-add{width:100%;padding:8px;background:var(--p);color:#fff;border-radius:var(--rs);font-weight:700;font-size:.78rem;border:none;cursor:pointer;transition:background .18s}
+    .pc-add:hover{background:var(--pd)}
+    .pc-add:disabled{background:#ccc;cursor:not-allowed}
+
+    /* ── SKELETON ── */
+    .sk{background:linear-gradient(90deg,#efefef 25%,#e3e3e3 50%,#efefef 75%);background-size:200% 100%;animation:shim 1.3s infinite;border-radius:var(--r)}
+    @keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .sk-card{border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden}
+    .sk-img{aspect-ratio:1/1;border-radius:0}
+    .sk-ln{height:13px;margin:8px 11px;border-radius:4px}
+
+    /* ── TESTIMONIALS ── */
+    .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(min-width:600px){.tgrid{grid-template-columns:repeat(3,1fr)}}
+    .tcard{background:var(--surf);border-radius:var(--r);padding:16px}
+    .tstars{color:#FFB800;margin-bottom:7px;font-size:.88rem;letter-spacing:1px}
+    .ttxt{font-size:.82rem;color:var(--txm);line-height:1.6;margin-bottom:10px}
+    .tauth{font-size:.77rem;font-weight:700}
+    .t3{display:none}
+    @media(min-width:600px){.t3{display:block}}
+
+    /* ── FOOTER ── */
+    footer{background:#0D0D0D;color:rgba(255,255,255,.6);padding:32px 16px 100px}
+    @media(min-width:600px){footer{padding-bottom:36px}}
+    .f-wrap{max-width:1100px;margin:0 auto}
+    .f-logo{font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:6px}
+    .f-logo span{color:var(--p)}
+    .f-tag{font-size:.82rem;margin-bottom:22px}
+    .f-links{display:flex;flex-wrap:wrap;gap:10px 20px;margin-bottom:20px}
+    .f-links a{font-size:.82rem;transition:color .2s}
+    .f-links a:hover{color:var(--p)}
+    .f-copy{border-top:1px solid rgba(255,255,255,.1);padding-top:14px;font-size:.75rem}
+
+    /* ── MOBILE BOTTOM NAV ── */
+    .bnav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:200;background:#fff;border-top:1px solid var(--bdr);height:var(--bnh)}
+    @media(min-width:600px){.bnav{display:none}}
+    .bn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.6rem;font-weight:600;color:#999;transition:color .15s;position:relative;padding:6px 2px}
+    .bn.on,.bn:hover{color:var(--p)}
+    .bn-ic{font-size:1.1rem}
+    .bn-bdg{position:absolute;top:4px;left:50%;margin-left:4px;background:var(--p);color:#fff;font-size:.53rem;font-weight:700;min-width:14px;height:14px;border-radius:7px;display:none;align-items:center;justify-content:center;padding:0 3px}
+
+    /* ── TOAST ── */
+    .toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(10px);background:#111;color:#fff;padding:10px 22px;border-radius:50px;font-size:.82rem;font-weight:600;opacity:0;transition:opacity .25s,transform .25s;z-index:999;pointer-events:none;white-space:nowrap;max-width:90vw}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    @media(min-width:600px){.toast{bottom:24px}}
+
+    /* ── EMPTY ── */
+    .empty{text-align:center;padding:56px 20px;color:var(--txm);grid-column:1/-1}
+    .empty-ic{font-size:2.8rem;margin-bottom:10px}
+    .empty a{color:var(--p);font-weight:700}
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">Shoe<span>Hub</span></a>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="openSearch()" aria-label="Search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <a href="cart.html" class="nav-btn" aria-label="Cart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="c-bdg" id="cBdg"></span>
+    </a>
+  </div>
+</nav>
+
+<!-- ══ SEARCH OVERLAY ══ -->
+<div class="srch-ov" id="srchOv" onclick="if(event.target===this)closeSearch()">
+  <div class="srch-box">
+    <input class="srch-inp" id="srchInp" type="search" placeholder="Search shoes, shirts, pants…" autocomplete="off">
+    <p class="srch-hint">Type to search products</p>
+    <div class="srch-res" id="srchRes"></div>
+  </div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="h-eye">New Collection · 2025</p>
+    <h1 class="h-title">Step into <em>Style</em></h1>
+    <p class="h-sub">Premium imported shoes &nbsp;·&nbsp; Cash on Delivery &nbsp;·&nbsp; Free 7-day exchange</p>
+    <a href="#shop" class="h-cta">Shop Collection ↓</a>
+  </div>
+</section>
+
+<!-- ══ TRUST BAR ══ -->
+<div class="trust">
+  <div class="t-item"><span class="ic">🚚</span>Free Delivery</div>
+  <div class="t-item"><span class="ic">💳</span>Cash on Delivery</div>
+  <div class="t-item"><span class="ic">🔄</span>7-Day Exchange</div>
+  <div class="t-item"><span class="ic">✅</span>100% Original</div>
+</div>
+
+<!-- ══ CATEGORIES ══ -->
+<div class="sec" id="shop">
+  <h2 class="sec-hd">Shop by Category</h2>
+  <p class="sec-sub">Browse our curated collections</p>
+  <div class="cats">
+    <div class="cat on" onclick="filterCat('All',this)"><span class="cat-ic">🏷️</span><span class="cat-nm">All</span></div>
+    <div class="cat" onclick="filterCat('Shoes',this)"><span class="cat-ic">👟</span><span class="cat-nm">Shoes</span></div>
+    <div class="cat" onclick="filterCat('Shirts',this)"><span class="cat-ic">👕</span><span class="cat-nm">Shirts</span></div>
+    <div class="cat" onclick="filterCat('Pants',this)"><span class="cat-ic">👖</span><span class="cat-nm">Pants</span></div>
+  </div>
+</div>
+
+<!-- ══ PRODUCTS ══ -->
+<div class="sec" style="padding-top:0">
+  <div class="row-between">
+    <h2 class="sec-hd">Featured Products</h2>
+    <span class="pcount" id="pCount"></span>
+  </div>
+  <div class="ftabs">
+    <button class="ftab on" onclick="sortP('default',this)">All</button>
+    <button class="ftab" onclick="sortP('price-asc',this)">Price ↑</button>
+    <button class="ftab" onclick="sortP('price-desc',this)">Price ↓</button>
+    <button class="ftab" onclick="sortP('new',this)">Newest</button>
+  </div>
+  <div class="pgrid" id="pGrid"></div>
+</div>
+
+<!-- ══ TESTIMONIALS ══ -->
+<div style="background:var(--surf);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)">
+  <div class="sec">
+    <h2 class="sec-hd">What Customers Say</h2>
+    <p class="sec-sub">Real reviews from real buyers across Bangladesh</p>
+    <div class="tgrid">
+      <div class="tcard">
+        <div class="tstars">★★★★★</div>
+        <p class="ttxt">"Best quality shoes I've ever ordered online. Delivered to Dhaka in just 2 days!"</p>
+        <p class="tauth">— Rakib H., Dhaka</p>
+      </div>
+      <div class="tcard">
+        <div class="tstars">★★★★★</div>
+        <p class="ttxt">"COD option is a lifesaver. Exact size, great packaging, no issues at all."</p>
+        <p class="tauth">— Sadia M., Chittagong</p>
+      </div>
+      <div class="tcard t3">
+        <div class="tstars">★★★★☆</div>
+        <p class="ttxt">"Easy exchange process. Swapped sizes without any questions asked. Will order again!"</p>
+        <p class="tauth">— Tanvir A., Sylhet</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="f-wrap">
+    <div class="f-logo">Shoe<span>Hub</span></div>
+    <p class="f-tag">Premium Shoes, Delivered Nationwide.</p>
+    <div class="f-links">
+      <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+      <a href="track.html">Track Order</a>
+      <a href="admin.html">Admin</a>
+    </div>
+    <p class="f-copy">© 2025 ShoeHub. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ══ MOBILE BOTTOM NAV ══ -->
+<nav class="bnav">
+  <a href="index.html" class="bn on"><span class="bn-ic">🏠</span>Home</a>
+  <a href="#shop" class="bn"><span class="bn-ic">👟</span>Shop</a>
+  <a href="cart.html" class="bn"><span class="bn-ic">🛒</span>Cart<span class="bn-bdg" id="bnBdg"></span></a>
+  <a href="track.html" class="bn"><span class="bn-ic">📦</span>Track</a>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API='https://script.google.com/macros/s/AKfycbwxOV8pQxrFupC8cR0ZxKPLLoOjZEq3hCBWioUt_Si6-QW0vAsHXDGHb2gkHB3puZun/exec';
+let allP=[],curCat='All',curSort='default';
+
+/* ── CART ── */
+const gc=()=>{try{return JSON.parse(localStorage.getItem('sh_cart')||'[]')}catch(e){return[]}};
+const sc=c=>localStorage.setItem('sh_cart',JSON.stringify(c));
+
+function updBadge(){
+  const n=gc().reduce((s,i)=>s+i.qty,0);
+  const b1=document.getElementById('cBdg'),b2=document.getElementById('bnBdg');
+  if(n>0){b1.textContent=n>99?'99+':n;b1.style.display='flex';b2.textContent=n>99?'99+':n;b2.style.display='flex'}
+  else{b1.style.display='none';b2.style.display='none'}
+}
+
+function addToCart(p){
+  const cart=gc(),ex=cart.find(i=>i.id===p.id&&i.size===p.size);
+  ex?ex.qty++:cart.push({...p,qty:1});
+  sc(cart);updBadge();showToast('Added to cart 🛒');
+}
+
+/* ── TOAST ── */
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+/* ── PRODUCT HELPERS ── */
+function getImg(p){
+  if(p.images&&Array.isArray(p.images)&&p.images[0])return p.images[0];
+  if(typeof p.image==='string'&&p.image)return p.image.split(',')[0].trim();
+  return'https://via.placeholder.com/300x300?text=No+Image';
+}
+const isOOS=p=>p.stock!=null&&p.stock!==undefined&&p.stock<=0;
+const isLow=p=>p.stock!=null&&p.stock!==undefined&&p.stock>0&&p.stock<=5;
+const disc=p=>p.originalPrice?Math.round((1-p.price/p.originalPrice)*100):0;
+
+/* ── SKELETONS ── */
+function showSkeletons(){
+  document.getElementById('pGrid').innerHTML=Array(6).fill(0).map(()=>`
+    <div class="sk-card">
+      <div class="sk sk-img"></div>
+      <div style="padding:10px 11px 12px">
+        <div class="sk sk-ln"></div>
+        <div class="sk sk-ln" style="width:65%;margin-top:6px"></div>
+        <div class="sk sk-ln" style="height:30px;margin-top:9px;border-radius:8px"></div>
+      </div>
+    </div>`).join('');
+}
+
+/* ── RENDER PRODUCTS ── */
+function renderP(){
+  let list=curCat==='All'?[...allP]:allP.filter(p=>p.category===curCat);
+  if(curSort==='price-asc')list.sort((a,b)=>a.price-b.price);
+  else if(curSort==='price-desc')list.sort((a,b)=>b.price-a.price);
+  else if(curSort==='new')list.sort((a,b)=>b.id-a.id);
+  const g=document.getElementById('pGrid');
+  document.getElementById('pCount').textContent=list.length+' items';
+  if(!list.length){g.innerHTML=`<div class="empty"><div class="empty-ic">🔍</div><p>No products found.</p><a href="#" onclick="filterCat('All',document.querySelector('.cat'));return false">View all</a></div>`;return}
+  g.innerHTML=list.map(p=>{
+    const img=getImg(p),d=disc(p),oos=isOOS(p),low=isLow(p);
+    return`<div class="pcard" onclick="location.href='product.html?id=${p.id}'">
+      <div class="pc-img">
+        <img src="${img}" alt="${p.name}" loading="lazy" width="300" height="300">
+        ${p.badge&&!oos?`<div class="pc-badge">${p.badge}</div>`:''}
+        ${oos?'<div class="pc-badge sold">Sold Out</div>':''}
+        ${low&&!oos?`<div class="pc-stock">⚡ Only ${p.stock} left!</div>`:''}
+      </div>
+      <div class="pc-info">
+        <div class="pc-nm">${p.name}</div>
+        <div class="pc-pr">
+          <span class="price">৳${Number(p.price).toLocaleString()}</span>
+          ${p.originalPrice?`<span class="ori">৳${Number(p.originalPrice).toLocaleString()}</span>`:''}
+          ${d>=5?`<span class="disc">-${d}%</span>`:''}
+        </div>
+        <button class="pc-add"${oos?' disabled':''}onclick="event.stopPropagation();qAdd(${p.id})">${oos?'Out of Stock':'+ Add to Cart'}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function qAdd(id){
+  const p=allP.find(x=>x.id===id);if(!p)return;
+  const sz=Array.isArray(p.sizes)?p.sizes:(p.sizes?String(p.sizes).split(','):[]);
+  if(sz.length>0){location.href='product.html?id='+id;return}
+  addToCart({id:p.id,name:p.name,price:p.price,image:getImg(p),size:'',category:p.category});
+}
+
+function filterCat(cat,el){
+  curCat=cat;
+  document.querySelectorAll('.cat').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');renderP();
+}
+
+function sortP(s,btn){
+  curSort=s;
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');renderP();
+}
+
+/* ── SEARCH ── */
+let st;
+function openSearch(){document.getElementById('srchOv').classList.add('open');document.getElementById('srchInp').focus()}
+function closeSearch(){document.getElementById('srchOv').classList.remove('open')}
+document.getElementById('srchInp').addEventListener('input',function(){
+  clearTimeout(st);
+  st=setTimeout(()=>{
+    const q=this.value.trim().toLowerCase(),res=document.getElementById('srchRes');
+    if(!q){res.innerHTML='';return}
+    const found=allP.filter(p=>p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q)).slice(0,7);
+    if(!found.length){res.innerHTML='<p style="padding:8px;font-size:.83rem;color:#999">No results found</p>';return}
+    res.innerHTML=found.map(p=>`
+      <div class="srch-item" onclick="location.href='product.html?id=${p.id}'">
+        <img src="${getImg(p)}" alt="${p.name}" loading="lazy">
+        <div><div class="srch-nm">${p.name}</div><div class="srch-pr">৳${Number(p.price).toLocaleString()}</div></div>
+      </div>`).join('');
+  },280);
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSearch()});
+
+/* ── INIT ── */
+showSkeletons();
+updBadge();
+fetch(API+'?action=getProducts')
+  .then(r=>r.json())
+  .then(d=>{allP=Array.isArray(d)?d:[];renderP()})
+  .catch(()=>{document.getElementById('pGrid').innerHTML='<div class="empty"><div class="empty-ic">⚠️</div><p>Could not load products. Please refresh.</p></div>'});
+</script>
+</body>
+</html>
